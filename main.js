@@ -51,57 +51,67 @@ class LottoBall extends HTMLElement {
     }
 }
 
-customElements.define('lotto-ball', LottoBall);
-
-// Theme Toggle Logic
-const themeToggle = document.getElementById('theme-toggle');
-const currentTheme = localStorage.getItem('theme') || 'light';
-
-if (currentTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeToggle.textContent = 'Light Mode';
+if (!customElements.get('lotto-ball')) {
+    customElements.define('lotto-ball', LottoBall);
 }
 
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    if (theme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        themeToggle.textContent = 'Dark Mode';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        themeToggle.textContent = 'Light Mode';
-    }
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const currentTheme = localStorage.getItem('theme') || 'light';
 
-// Lotto Generation Logic
-document.getElementById('generate-btn').addEventListener('click', () => {
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = 'Dark Mode';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = 'Light Mode';
+            }
+        });
+    }
+
+    // Lotto Generation Logic
+    const generateBtn = document.getElementById('generate-btn');
     const lottoNumbersContainer = document.getElementById('lotto-numbers');
-    lottoNumbersContainer.innerHTML = ''; 
 
-    const numbers = new Set();
-    while(numbers.size < 6) {
-        const randomNumber = Math.floor(Math.random() * 45) + 1;
-        numbers.add(randomNumber);
+    if (generateBtn && lottoNumbersContainer) {
+        generateBtn.addEventListener('click', () => {
+            lottoNumbersContainer.innerHTML = ''; 
+
+            const numbers = new Set();
+            while(numbers.size < 6) {
+                const randomNumber = Math.floor(Math.random() * 45) + 1;
+                numbers.add(randomNumber);
+            }
+
+            const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
+
+            sortedNumbers.forEach((number, index) => {
+                setTimeout(() => {
+                    const lottoBall = document.createElement('lotto-ball');
+                    lottoBall.setAttribute('number', number);
+                    
+                    let range = '';
+                    if (number <= 10) range = '1-10';
+                    else if (number <= 20) range = '11-20';
+                    else if (number <= 30) range = '21-30';
+                    else if (number <= 40) range = '31-40';
+                    else range = '41-45';
+                    lottoBall.setAttribute('number-range', range);
+
+                    lottoNumbersContainer.appendChild(lottoBall);
+                }, index * 200);
+            });
+        });
     }
-
-    const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
-
-    sortedNumbers.forEach((number, index) => {
-        setTimeout(() => {
-            const lottoBall = document.createElement('lotto-ball');
-            lottoBall.setAttribute('number', number);
-            
-            let range = '';
-            if (number <= 10) range = '1-10';
-            else if (number <= 20) range = '11-20';
-            else if (number <= 30) range = '21-30';
-            else if (number <= 40) range = '31-40';
-            else range = '41-45';
-            lottoBall.setAttribute('number-range', range);
-
-            lottoNumbersContainer.appendChild(lottoBall);
-        }, index * 200);
-    });
 });
