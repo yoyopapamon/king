@@ -12,15 +12,15 @@ class LottoBall extends HTMLElement {
                     width: 60px;
                     height: 60px;
                     border-radius: 50%;
-                    background-color: var(--primary-color, #1A237E);
-                    color: var(--secondary-color, #FFFFFF);
+                    background-color: var(--ball-bg, #1A237E);
+                    color: #FFFFFF;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     font-family: inherit;
                     font-size: 1.5rem;
                     font-weight: 700;
-                    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
+                    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 8px var(--ball-shadow, rgba(0,0,0,0.2));
                     transform-style: preserve-3d;
                     transition: transform 0.5s ease, background-color 0.5s ease;
                     animation: appear 0.5s ease-out forwards;
@@ -37,12 +37,11 @@ class LottoBall extends HTMLElement {
                     }
                 }
 
-                /* Add styles for different number ranges for more visual variety */
-                :host([number-range="1-10"]) .lotto-ball { background-color: #4CAF50; }
-                :host([number-range="11-20"]) .lotto-ball { background-color: #2196F3; }
-                :host([number-range="21-30"]) .lotto-ball { background-color: #FFC107; color: #333;}
-                :host([number-range="31-40"]) .lotto-ball { background-color: #E91E63; }
-                :host([number-range="41-45"]) .lotto-ball { background-color: #9C27B0; }
+                :host([number-range="1-10"]) .lotto-ball { --ball-bg: #4CAF50; }
+                :host([number-range="11-20"]) .lotto-ball { --ball-bg: #2196F3; }
+                :host([number-range="21-30"]) .lotto-ball { --ball-bg: #FFC107; color: #333;}
+                :host([number-range="31-40"]) .lotto-ball { --ball-bg: #E91E63; }
+                :host([number-range="41-45"]) .lotto-ball { --ball-bg: #9C27B0; }
 
             </style>
             <div class="lotto-ball">
@@ -54,9 +53,32 @@ class LottoBall extends HTMLElement {
 
 customElements.define('lotto-ball', LottoBall);
 
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'light';
+
+if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeToggle.textContent = 'Light Mode';
+}
+
+themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = 'Dark Mode';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = 'Light Mode';
+    }
+});
+
+// Lotto Generation Logic
 document.getElementById('generate-btn').addEventListener('click', () => {
     const lottoNumbersContainer = document.getElementById('lotto-numbers');
-    lottoNumbersContainer.innerHTML = ''; // Clear previous numbers
+    lottoNumbersContainer.innerHTML = ''; 
 
     const numbers = new Set();
     while(numbers.size < 6) {
@@ -80,6 +102,6 @@ document.getElementById('generate-btn').addEventListener('click', () => {
             lottoBall.setAttribute('number-range', range);
 
             lottoNumbersContainer.appendChild(lottoBall);
-        }, index * 200); // Staggered animation
+        }, index * 200);
     });
 });
