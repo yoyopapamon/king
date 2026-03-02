@@ -25,6 +25,30 @@
             <button id="generate-btn">Generate Numbers</button>
         </div>
     </main>
+    <section class="partnership-section">
+        <div class="partnership-container">
+            <h2>제휴 문의 (Partnership)</h2>
+            <p>로또 번호 생성기 관련 제휴 및 문의 사항을 남겨주세요.</p>
+            <form action="https://formspree.io/f/xdalvqvl" method="POST" id="partnership-form">
+                <div class="input-group">
+                    <label for="name">성함/업체명</label>
+                    <input type="text" id="name" name="name" placeholder="홍길동" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">이메일 주소</label>
+                    <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="message">문의 내용</label>
+                    <textarea id="message" name="message" rows="4" placeholder="문의 내용을 입력해주세요." required></textarea>
+                </div>
+                <!-- Formspree settings -->
+                <input type="hidden" name="_subject" value="새로운 제휴 문의가 접수되었습니다!">
+                <button type="submit" id="submit-btn">문의 보내기</button>
+            </form>
+            <p class="form-hint">* 'YOUR_FORMSPREE_ID' 부분을 실제 Formspree ID로 변경해야 작동합니다.</p>
+        </div>
+    </section>
     <footer>
         <p>&copy; 2023 Modern Lotto. All rights reserved.</p>
     </footer>
