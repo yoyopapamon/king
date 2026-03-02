@@ -17,6 +17,7 @@ class LottoBall extends HTMLElement {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    font-family: inherit;
                     font-size: 1.5rem;
                     font-weight: 700;
                     box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
