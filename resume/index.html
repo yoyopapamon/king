@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 이력서 키워드 분석기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav><a href="../index.html" class="back-link">← 로또 추첨기 홈으로</a></nav>
+        <h1>AI 이력서 키워드 분석기</h1>
+        <p>지원자의 이력서에서 핵심 역량을 자동으로 추출합니다.</p>
+    </header>
+    <main>
+        <div class="analyzer-card">
+            <div class="input-group">
+                <label for="resume-text">지원자 이력서 (복사해서 붙여넣기)</label>
+                <textarea id="resume-text" placeholder="이력서 전체 내용을 여기에 입력하세요..."></textarea>
+            </div>
+            <div class="input-group">
+                <label for="keywords">검색할 필수 키워드 (쉼표로 구분)</label>
+                <input type="text" id="keywords" placeholder="예: Python, 열정, 소통, 문제해결">
+            </div>
+            <button id="analyze-btn">분석 시작하기</button>
+
+            <div id="result-section" class="result-section hidden">
+                <hr>
+                <h2>분석 결과</h2>
+                <div class="score-container">
+                    <div class="score-circle">
+                        <span id="score-number">0</span><span class="percent">%</span>
+                    </div>
+                    <p id="result-message"></p>
+                </div>
+                <div class="keyword-tags" id="found-keywords">
+                    <!-- 발견된 키워드들이 여기에 표시됩니다 -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Smart Hiring Tool. All rights reserved.</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
