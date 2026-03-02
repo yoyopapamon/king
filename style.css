@@ -239,8 +239,20 @@ p {
     transform: translateY(-2px);
 }
 
-.form-hint {
-    margin-top: 1.5rem;
-    font-size: 0.8rem;
-    color: #888;
+/* Comments Section */
+.comments-section {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.comments-container {
+    background-color: var(--container-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    max-width: 90%;
+    width: 800px;
+    transition: background-color 0.3s ease;
 }
