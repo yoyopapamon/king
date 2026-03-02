@@ -1,0 +1,9 @@
+# Logs
+firebase-debug.log
+*.log
+
+# Node.js
+node_modules/
+
+# VS Code
+.vscode/
